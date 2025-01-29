@@ -8,7 +8,7 @@ const About = () => {
   const t = useTranslations("about");
 
   return (
-    <div className="flex justify-between items-center flex-col-reverse md:flex-row gap-4">
+    <div className="flex justify-between items-center flex-col-reverse md:flex-row gap-4 overflow-x-hidden">
       {/* Text */}
       <div
         data-aos="fade-right"

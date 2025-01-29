@@ -28,7 +28,7 @@ const Cursor = () => {
   return (
     <div
       ref={cursorRef}
-      className="cursor w-[40px] h-[40px] border border-dark-gray-200 -translate-x-1/2 -translate-y-1/2 rounded-full fixed pointer-events-none z-[1000000000000000000000000] transition-all duration-100 ease-linear"
+      className="cursor w-[40px] h-[40px] border border-dark-gray-200 -translate-x-1/2 -translate-y-1/2 rounded-full fixed pointer-events-none z-[1000000000000000000000000] transition-all duration-100 ease-linear hidden sm:block"
     />
   );
 };
