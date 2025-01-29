@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  transition: all 0.5s;
+  &.ar {
+    font-family: "Cairo", serif;
+    .circle-1,
+    .circle-2 {
+      right: 50% !important;
+      top: 50% !important;
+      translate: 50% -50%;
+    }
+  }
+  &.en {
+    font-family: "Roboto Mono", serif;
+    .circle-1,
+    .circle-2 {
+      left: 50% !important;
+      top: 50% !important;
+      translate: -50% -50%;
+    }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar-corner {
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background: #f9f9f9;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+::-webkit-scrollbar-track {
+  background-color: #111013;
+}
+::-webkit-scrollbar-thumb {
+  background: #909dac;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+.circle-1 {
+  animation: zoom 20s infinite linear;
+}
+.circle-2 {
+  animation: spinner 20s infinite linear;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  50% {
+    transform: scale(1.5, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes spinner {
+  100% {
+    -webkit-transform: translate3d(0px, 0px, 0px) rotateZ(-360deg);
+    transform: translate3d(0px, 0px, 0px) rotateZ(-360deg);
+  }
+}
+
+.cursor-animation {
+  animation: hideScroll 1s infinite linear;
+}
+
+@keyframes hideScroll {
+  0% {
+    top: 10px;
+  }
+  100% {
+    opacity: 0;
+    top: 35px;
+  }
+}
+
+.CurrserText {
+  animation: fadeIn 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes fadeIn {
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (width >=767px) {
+  .project:hover {
+    scale: 1.18;
+    position: absolute;
+    z-index: 10;
+
+    .texts {
+      max-height: 200px;
+      transition: all 1s 0.3s;
+    }
+  }
+  .project:hover .links {
+    bottom: 20px;
+  }
+}
+
+/* Swiper Navigation Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  width: 40px; /* Circle size */
+  height: 40px; /* Circle size */
+  border-radius: 50%; /* Makes it circular */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+@media (width >=767px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    opacity: 0; /* Hidden by default */
+  }
+}
+
+/* Hover effect for navigation arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  background: rgba(255, 255, 255, 1);
+  min-width: 25px;
+  max-width: 25px;
+  min-height: 25px;
+  max-height: 25px;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Arrow icons */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  content: "" !important;
+  left: 55%;
+  top: 50%;
+  translate: -50% -50%;
+  position: absolute;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M8.25 4.5l7.5 7.5-7.5 7.5'/%3E%3C/svg%3E"); /* Right arrow SVG */
+  width: 15px;
+  height: 15px;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: #333;
+}
+
+/* Flip the icon for the previous button */
+.swiper-button-prev::after {
+  left: 45%;
+  transform: rotate(180deg);
+}
+
+.project:hover .swiper-button-next,
+.project:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .disAos[data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+.to-top.show {
+  opacity: 1;
+  z-index: 100000;
+}

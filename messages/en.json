@@ -1,0 +1,32 @@
+{
+  "navbar": {
+    "Home": "Home",
+    "About": "About",
+    "Works": "Works",
+    "Contact Us": "Contact Me",
+    "Arabic": "Arabic"
+  },
+  "landing": {
+    "Hi I'm": "Hi I'm",
+    "Salem Mamdouh Salem": "Salem Mamdouh Salem",
+    "I'm Front End Developer": "I'm Front End Developer"
+  },
+  "titles": {
+    "My Projects": "My Projects",
+    "About Me": "About Me",
+    "Skills": "Skills"
+  },
+  "about": {
+    "passionate": "I’m a passionate Front-End Developer currently studying at CIS, New Cairo, beginning College in 2024.",
+    "specialize": "I specialize in React.js, Next.js, and TypeScript, building modern and scalable web applications.",
+    "experience": "I have experience working with Next.js & React for dynamic development and various other skills."
+  },
+
+  "contact": {
+    "Contact Us": "Contact Me"
+  },
+  "footer": {
+    "Contact Us": "Contact Me",
+    "Crated": "Crated By Salem Mamdouh"
+  }
+}
