@@ -45,6 +45,7 @@ const SmallMenu = ({
           {NAV_LINKS.map((link) => (
             <li key={link.key}>
               <Link
+                onClick={() => setOpen(false)}
                 href={`/${locale}/${link.href}`}
                 className="bg-white dark:bg-dark-300 block px-4 py-3 rounded-md"
               >
@@ -63,6 +64,7 @@ const SmallMenu = ({
             {t("Arabic")}
           </div>
           <Link
+            onClick={() => setOpen(false)}
             href={`/${locale}/contact`}
             className="bg-light-200 text-dark-text px-4 py-[7px] rounded-md dark:bg-dark-100 dark:text-light-text"
           >

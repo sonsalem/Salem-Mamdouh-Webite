@@ -27,6 +27,8 @@ const Navbar = () => {
       router.replace(newPath);
     }
 
+    setOpen(false);
+
     return null;
   };
 
