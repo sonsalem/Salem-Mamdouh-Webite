@@ -21,7 +21,13 @@ const About = () => {
 
       {/* Image */}
       <div data-aos="fade-left" className="images">
-        <Image src={`/about.png`} alt="about Image" width={500} height={500} />
+        <Image
+          src={`/about.png`}
+          alt="about Image"
+          width={500}
+          height={500}
+          className="max-w-[100%]"
+        />
       </div>
     </div>
   );
