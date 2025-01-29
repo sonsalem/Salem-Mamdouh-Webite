@@ -38,7 +38,7 @@ const Navbar = () => {
   return (
     <>
       <div className="p-4 fixed top-0 container z-50 left-1/2 -translate-x-1/2 max-w-[100vw]">
-        <div className="p-6 flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#181b24b2] backdrop-blur-sm">
+        <div className="p-6  flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[100%] md:max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#181b24b2] backdrop-blur-sm">
           {/* <div className="p-6 flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#1c1b1eF1] backdrop-blur-sm"> */}
           <div className="flex gap-6">
             <Link href={"/"} className="logo text-xl font-bold relative">
