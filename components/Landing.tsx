@@ -40,7 +40,7 @@ const Landing = () => {
   }, [index, removing]);
 
   return (
-    <div className="box flex flex-col justify-center items-center overflow-x-hidden">
+    <div className="box flex flex-col justify-center items-center overflow-hidden">
       {/* TEXTS */}
       <div className="texts text-center mx-auto w-full mb-4" data-aos="zoom-in">
         <div className="text-light-gray-200 dark:text-dark-gray-200 mb-2">
