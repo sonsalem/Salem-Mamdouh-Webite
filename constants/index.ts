@@ -115,6 +115,7 @@ export const skillsImgs = [
   { src: "/skill-10.png" },
   { src: "/skill-11.png" },
   { src: "/skill-12.png" },
+  { src: "/skill-13.png" },
   { src: "/skill-3.png" },
   { src: "/skill-4.png" },
   { src: "/skill-5.png" },
