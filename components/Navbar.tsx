@@ -41,7 +41,10 @@ const Navbar = () => {
         <div className="p-6  flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[100%] md:max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#181b24b2] backdrop-blur-sm">
           {/* <div className="p-6 flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#1c1b1eF1] backdrop-blur-sm"> */}
           <div className="flex gap-6">
-            <Link href={"/"} className="logo text-xl font-bold relative">
+            <Link
+              href={`/${locale}`}
+              className="logo text-xl font-bold relative"
+            >
               {BRAND_NAME}
             </Link>
 

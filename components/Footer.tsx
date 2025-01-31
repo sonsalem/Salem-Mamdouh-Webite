@@ -12,7 +12,7 @@ const Footer = () => {
     <>
       <div className="container px-4 md:px-8 lg:px-16 xl:px-32 mx-auto overflow-x-hidden">
         <div className="border-t-2 border-[#0000001A] dark:border-[#FFFFFF1A] flex items-center justify-between py-10">
-          <Link className="font-bold text-xl" href={"/"}>
+          <Link className="font-bold text-xl" href={`/${locale}`}>
             {BRAND_NAME}
           </Link>
           <Link
