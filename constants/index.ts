@@ -63,7 +63,7 @@ const projects: Project[] = [
       { src: "/2-5.jpg" },
       { src: "/2-6.jpg" },
     ],
-    techStack: ["Next.js", "Tailwind CSS", "Wix"],
+    techStack: ["Next.js", "Tailwind CSS", "Zustand", "Wix"],
     features: "Enhanced product search functionality.",
     github: "https://github.com/sonsalem/Lama-ecommerc",
   },
