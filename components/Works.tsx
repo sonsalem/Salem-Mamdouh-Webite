@@ -8,8 +8,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
 import { Github, Globe } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 
 const Works = () => {
+  const t = useTranslations();
+  const { locale } = useParams();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start">
       {projects.map((project, i) => (
@@ -59,8 +64,14 @@ const Works = () => {
                 )}
               </div>
               {project.new && (
-                <div className="absolute bg-main dark:bg-dark-100 top-6 left-0 z-[100] text-sm px-4 py-1 rounded-e-md">
-                  NEW
+                <div
+                  className={`absolute bg-main dark:bg-dark-100 top-6 z-[100] text-sm px-4 py-1 ${
+                    locale === "en"
+                      ? "left-0 rounded-e-md"
+                      : "right-0 rounded-s-md"
+                  }`}
+                >
+                  {t("NEW")}
                 </div>
               )}
             </div>
