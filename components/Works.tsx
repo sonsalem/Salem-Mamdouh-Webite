@@ -12,7 +12,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 
 const Works = () => {
-  const t = useTranslations();
+  const t = useTranslations("works");
   const { locale } = useParams();
 
   return (
