@@ -19,9 +19,32 @@ type Project = {
   features: string;
   github?: string;
   liveDemo?: string;
+  new?: boolean;
 };
 
 const projects: Project[] = [
+  {
+    name: "School Dashboard",
+    images: [
+      { src: "/5-1.png" },
+      { src: "/5-2.png" },
+      { src: "/5-0.png" },
+      { src: "/5-3.png" },
+      { src: "/5-4.png" },
+    ],
+    techStack: [
+      "Next.js",
+      "Tailwind CSS",
+      "Zod",
+      "Hook Form",
+      "Big Calendar",
+      "recharts",
+    ],
+    features: "Dashboard For School has all sections you need",
+    github: "hhttps://github.com/sonsalem/School_Dashboard",
+    liveDemo: "https://school-dashboard-lac.vercel.app/admin",
+    new: true,
+  },
   {
     name: "Live Docs",
     images: [

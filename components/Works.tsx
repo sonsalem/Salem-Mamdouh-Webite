@@ -58,6 +58,11 @@ const Works = () => {
                   </Link>
                 )}
               </div>
+              {project.new && (
+                <div className="absolute bg-main dark:bg-dark-100 top-6 left-0 z-[100] text-sm px-4 py-1 rounded-e-md">
+                  NEW
+                </div>
+              )}
             </div>
             <div className="texts my-2 md:max-h-0 overflow-hidden px-3">
               <div className="font-semibold mb-2">{project.name}</div>
