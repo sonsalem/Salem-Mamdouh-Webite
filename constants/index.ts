@@ -26,7 +26,6 @@ const projects: Project[] = [
   {
     name: "School Dashboard",
     images: [
-      { src: "/5-1.png" },
       { src: "/5-2.png" },
       { src: "/5-0.png" },
       { src: "/5-3.png" },
