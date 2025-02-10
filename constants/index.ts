@@ -40,7 +40,7 @@ const projects: Project[] = [
       "recharts",
     ],
     features: "Dashboard For School has all sections you need",
-    github: "hhttps://github.com/sonsalem/School_Dashboard",
+    github: "https://github.com/sonsalem/School_Dashboard",
     liveDemo: "https://school-dashboard-lac.vercel.app/admin",
     new: true,
   },
