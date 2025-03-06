@@ -24,12 +24,40 @@ type Project = {
 
 const projects: Project[] = [
   {
+    name: "Fresh Cart",
+    images: [
+      { src: "/6-0.jpg" },
+      { src: "/6-1.jpg" },
+      { src: "/6-2.jpg" },
+      { src: "/6-3.jpg" },
+      { src: "/6-4.jpg" },
+      { src: "/6-5.jpg" },
+      { src: "/6-6.jpg" },
+      { src: "/6-7.jpg" },
+      { src: "/6-8.jpg" },
+      { src: "/6-9.jpg" },
+    ],
+    techStack: [
+      "Next.js",
+      "Tailwind CSS",
+      "Shadcn",
+      "Redux",
+      "Zod",
+      "React-hook-form",
+    ],
+    features:
+      "Modern e-commerce platform with a smooth UI, state management, and efficient cart handling",
+    github: "https://github.com/sonsalem/Freash_Cart",
+    liveDemo: "https://freash-cart-indol.vercel.app",
+    new: true,
+  },
+  {
     name: "School Dashboard",
     images: [
-      { src: "/5-2.png" },
       { src: "/5-0.png" },
+      { src: "/5-1.png" },
+      { src: "/5-2.png" },
       { src: "/5-3.png" },
-      { src: "/5-4.png" },
     ],
     techStack: [
       "Next.js",
@@ -42,7 +70,6 @@ const projects: Project[] = [
     features: "Dashboard For School has all sections you need",
     github: "https://github.com/sonsalem/School_Dashboard",
     liveDemo: "https://school-dashboard-lac.vercel.app/admin",
-    new: true,
   },
   {
     name: "Live Docs",
