@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const About = () => {
@@ -17,6 +18,14 @@ const About = () => {
         <span>{t("passionate")}</span>
         <span>{t("specialize")}</span>
         <span>{t("experience")}</span>
+        <Link
+          href="Salem Mamdouh Salem CV.pdf"
+          download
+          className="rounded-lg w-fit px-4  py-2 border-[1px] border-light-gray-200 block transition-all duration-300 hover:bg-dark-200 hover:text-white
+          dark:hover:bg-white dark:hover:text-dark-200"
+        >
+          {t("download")}
+        </Link>
       </div>
 
       {/* Image */}

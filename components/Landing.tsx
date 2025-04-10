@@ -11,33 +11,33 @@ const Landing = () => {
   // ANimating Text
   const originalText = t(`I'm Front End Developer`);
 
-  const [displayText, setDisplayText] = useState<string>("");
+  const [displayText, setDisplayText] = useState<string>(originalText);
   const [index, setIndex] = useState<number>(originalText.length - 1);
   const [removing, setRemoving] = useState<boolean>(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (removing) {
-        if (index >= 3) {
-          setDisplayText(originalText.slice(0, index));
-          setIndex((prev) => prev - 1);
-        } else {
-          setRemoving(false);
-          setIndex(3);
-        }
-      } else {
-        if (index <= originalText.length) {
-          setDisplayText(originalText.slice(0, index));
-          setIndex((prev) => prev + 1);
-        } else {
-          setRemoving(true);
-          setIndex(originalText.length - 1);
-        }
-      }
-    }, 250);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (removing) {
+  //       if (index >= 3) {
+  //         setDisplayText(originalText.slice(0, index));
+  //         setIndex((prev) => prev - 1);
+  //       } else {
+  //         setRemoving(false);
+  //         setIndex(3);
+  //       }
+  //     } else {
+  //       if (index <= originalText.length) {
+  //         setDisplayText(originalText.slice(0, index));
+  //         setIndex((prev) => prev + 1);
+  //       } else {
+  //         setRemoving(true);
+  //         setIndex(originalText.length - 1);
+  //       }
+  //     }
+  //   }, 250);
 
-    return () => clearInterval(interval);
-  }, [index, removing]);
+  //   return () => clearInterval(interval);
+  // }, [index, removing]);
 
   return (
     <div className="box flex flex-col justify-center items-center overflow-hidden">

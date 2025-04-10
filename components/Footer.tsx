@@ -1,6 +1,6 @@
 "use client";
 
-import { BRAND_NAME } from "@/constants";
+import { BRAND_NAME, BRAND_NAME_AR } from "@/constants";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="container px-4 md:px-8 lg:px-16 xl:px-32 mx-auto overflow-x-hidden">
         <div className="border-t-2 border-[#0000001A] dark:border-[#FFFFFF1A] flex items-center justify-between py-10">
           <Link className="font-bold text-xl" href={`/${locale}`}>
-            {BRAND_NAME}
+            {locale == "en" ? BRAND_NAME : BRAND_NAME_AR}
           </Link>
           <Link
             href={`/${locale}/contact`}

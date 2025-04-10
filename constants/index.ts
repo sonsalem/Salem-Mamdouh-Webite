@@ -1,6 +1,7 @@
 // Brand Name
 
-export const BRAND_NAME = "SON";
+export const BRAND_NAME = "SALEM";
+export const BRAND_NAME_AR = "سَالم";
 
 // NAVIGATION
 
@@ -179,7 +180,7 @@ export const SocilMedias = [
     src: "/Facebook.png",
     href: "https://www.facebook.com/profile.php?id=61553863762148",
   },
-  { src: "/Instagram.png", href: "https://www.instagram.com/salemmamdouh77/" },
+  { src: "/Instagram.png", href: "https://www.instagram.com/_salem.mamdouh/" },
   {
     src: "/LinkedIn.png",
     href: "https://www.linkedin.com/in/salem-mamdouh-47b784266/",
@@ -187,7 +188,7 @@ export const SocilMedias = [
   { src: "/Whatsapp.png", href: "https://wa.me/201556617801" },
   {
     src: "/Tiktok.png",
-    href: "https://www.tiktok.com/@salemmamdouh7?_t=ZS-8tTlbXfim5x&_r=1",
+    href: "https://www.tiktok.com/@_salem.mamdouh",
   },
   { src: "/Telegram.png", href: "https://t.me/sonsalem" },
   { src: "/google.png", href: "mailto:salemmamdouh77777@gmail.com" },

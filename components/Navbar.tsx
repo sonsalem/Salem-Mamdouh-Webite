@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { BRAND_NAME, NAV_LINKS } from "@/constants";
+import { BRAND_NAME, BRAND_NAME_AR, NAV_LINKS } from "@/constants";
 import { Globe, Menu } from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -45,7 +45,7 @@ const Navbar = () => {
               href={`/${locale}`}
               className="logo text-xl font-bold relative"
             >
-              {BRAND_NAME}
+              {locale == "en" ? BRAND_NAME : BRAND_NAME_AR}
             </Link>
 
             <ul className="links lg:flex gap-6 hidden">
