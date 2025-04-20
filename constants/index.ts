@@ -25,6 +25,24 @@ type Project = {
 
 const projects: Project[] = [
   {
+    name: "Crypto Tracker",
+    images: [
+      { src: "/7-0.jpg" },
+      { src: "/7-1.jpg" },
+      { src: "/7-2.jpg" },
+      { src: "/7-3.jpg" },
+      { src: "/7-4.jpg" },
+      { src: "/7-5.jpg" },
+      { src: "/7-6.jpg" },
+    ],
+    techStack: ["React", "TypeScript", "CSS", "MUI", "Chart.js"],
+    features:
+      "A crypto tracker app that allows you to track the price of your favorite cryptocurrencies in real-time.",
+    github: "https://github.com/sonsalem/CryptoTrachker",
+    liveDemo: "https://crypto-trachker.vercel.app/",
+    new: true,
+  },
+  {
     name: "Fresh Cart",
     images: [
       { src: "/6-0.jpg" },
@@ -40,6 +58,7 @@ const projects: Project[] = [
     ],
     techStack: [
       "Next.js",
+      "TypeScript",
       "Tailwind CSS",
       "Shadcn",
       "Redux",
@@ -50,7 +69,6 @@ const projects: Project[] = [
       "Modern e-commerce platform with a smooth UI, state management, and efficient cart handling",
     github: "https://github.com/sonsalem/Freash_Cart",
     liveDemo: "https://freash-cart-indol.vercel.app",
-    new: true,
   },
   {
     name: "School Dashboard",
@@ -62,6 +80,7 @@ const projects: Project[] = [
     ],
     techStack: [
       "Next.js",
+      "TypeScript",
       "Tailwind CSS",
       "Zod",
       "Hook Form",
@@ -98,7 +117,7 @@ const projects: Project[] = [
       { src: "/1-5.png" },
       { src: "/1-6.png" },
     ],
-    techStack: ["Next.js", "Tailwind CSS", "Shadcn"],
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn"],
     features: "Simplified product search and filter",
     github: "https://github.com/sonsalem/ShopNest",
     liveDemo: "https://shop-nest-six.vercel.app",
@@ -113,7 +132,7 @@ const projects: Project[] = [
       { src: "/2-5.jpg" },
       { src: "/2-6.jpg" },
     ],
-    techStack: ["Next.js", "Tailwind CSS", "Zustand", "Wix"],
+    techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Zustand", "Wix"],
     features: "Enhanced product search functionality.",
     github: "https://github.com/sonsalem/Lama-ecommerc",
   },
