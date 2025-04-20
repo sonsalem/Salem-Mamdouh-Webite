@@ -27,13 +27,13 @@ const projects: Project[] = [
   {
     name: "Crypto Tracker",
     images: [
-      { src: "/7-0.jpg" },
-      { src: "/7-1.jpg" },
-      { src: "/7-2.jpg" },
-      { src: "/7-3.jpg" },
-      { src: "/7-4.jpg" },
-      { src: "/7-5.jpg" },
-      { src: "/7-6.jpg" },
+      { src: "/7-0.png" },
+      { src: "/7-1.png" },
+      { src: "/7-2.png" },
+      { src: "/7-3.png" },
+      { src: "/7-4.png" },
+      { src: "/7-5.png" },
+      { src: "/7-6.png" },
     ],
     techStack: ["React", "TypeScript", "CSS", "MUI", "Chart.js"],
     features:
