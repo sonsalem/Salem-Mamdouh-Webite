@@ -1,11 +1,11 @@
 import Landing from "@/components/Landing";
-import Works from "@/components/Works";
 import { getTranslations } from "next-intl/server";
 import { Boxes, PenTool, UserRound } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
+import Projects from "@/components/Projects";
 
 const page = async () => {
   const t = await getTranslations("titles");
@@ -53,7 +53,7 @@ const page = async () => {
           <Boxes />
         </div>
 
-        <Works />
+        <Projects />
       </div>
       <div className="ontainer px-4 md:px-8 lg:px-16 xl:px-32 mx-auto mb-40">
         <div

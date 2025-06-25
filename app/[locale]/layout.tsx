@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SwitchTheme from "@/components/SwitchTheme";
 import Cursor from "@/components/Cursor";
 import ClientAOS from "@/components/ClientAOS";
+import QueryProvider from "@/config/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Salem Mamdouh",
@@ -39,14 +40,16 @@ export default async function RootLayout({
           locale === "en" ? "en" : "ar"
         }`}
       >
-        <NextIntlClientProvider messages={messages}>
-          <ClientAOS />
-          <Cursor />
-          <Navbar />
-          <main className="flex-1 w-full">{children}</main>
-          <Footer />
-          <SwitchTheme />
-        </NextIntlClientProvider>
+        <QueryProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ClientAOS />
+            <Cursor />
+            <Navbar />
+            <main className="flex-1 w-full">{children}</main>
+            <Footer />
+            <SwitchTheme />
+          </NextIntlClientProvider>
+        </QueryProvider>
       </body>
     </html>
   );
