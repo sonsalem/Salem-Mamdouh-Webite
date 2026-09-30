@@ -3,8 +3,11 @@
     "Home": "الرئيسية",
     "About": "عن نفسي",
     "Projects": "المشاريع",
+    "Experience": "الخبرات",
     "Contact Us": "تواصل معي",
-    "Arabic": "الانجليزيه"
+    "Arabic": "الانجليزيه",
+    "Menu": "القائمة",
+    "Close": "إغلاق"
   },
   "landing": {
     "Hi I'm": "أهلاً انا",
@@ -14,13 +17,29 @@
   "titles": {
     "My Projects": "أعمالي",
     "About Me": "عن نفسي",
-    "Skills": "المهارات"
+    "Skills": "المهارات",
+    "Experience": "الخبرات"
   },
   "projects": {
-    "NEW": "جديد"
+    "NEW": "جديد",
+    "live": "الموقع",
+    "code": "الكود",
+    "drag": "اسحب",
+    "view": "زيارة",
+    "scrollHint": "(مرّر) ← الأعمال",
+    "prev": "الصورة السابقة",
+    "next": "الصورة التالية",
+    "open": "فتح",
+    "details": "تفاصيل المشروع"
   },
   "contact": {
-    "Contact Us": "تواصل معي"
+    "Contact Us": "تواصل معي",
+    "label": "تواصل",
+    "title1": "لنعمل",
+    "title2": "معاً",
+    "cta": "تواصل معي",
+    "findMe": "تجدني على",
+    "open": "فتح"
   },
   "footer": {
     "Contact Us": "تواصل معي",
@@ -28,5 +47,61 @@
   },
   "load": {
     "Loading": "جاري التحميل"
+  },
+  "experiences": {
+    "Present": "حتى الآن",
+    "Current": "حالياً",
+    "years": "{count, plural, one {سنة} two {سنتان} few {# سنوات} many {# سنة} other {# سنة}}",
+    "months": "{count, plural, one {شهر} two {شهران} few {# أشهر} many {# شهراً} other {# شهر}}"
+  },
+  "theme": {
+    "toggle": "تغيير المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام"
+  },
+  "hero": {
+    "hi": "(أهلاً، أنا)",
+    "name": "سالم ممدوح سالم",
+    "line1a": "مطوّر",
+    "line1b": "",
+    "line2": "واجهات أمامية",
+    "rail": "سالم ممدوح — أعمالي",
+    "meta1": "مطوّر واجهات أمامية",
+    "meta2": "React · Next.js · TypeScript",
+    "meta3": "القاهرة الجديدة، مصر",
+    "scroll": "(مرّر) — للأسفل",
+    "scrollCursor": "مرّر",
+    "metaLabel1": "الدور",
+    "metaLabel2": "التقنيات",
+    "metaLabel3": "المكان"
+  },
+  "sections": {
+    "about": "عني",
+    "experience": "الخبرات",
+    "works": "الأعمال",
+    "skills": "المهارات",
+    "marquee1": "سالم ممدوح",
+    "marquee2": "مطوّر واجهات أمامية",
+    "marquee3": "React · Next.js · TypeScript"
+  },
+  "about": {
+    "cv": "تحميل سيرتي الذاتية",
+    "cvCursor": "PDF",
+    "imageAlt": "سالم ممدوح",
+    "imageLabel": "صورة",
+    "location": "القاهرة الجديدة"
+  },
+  "project": {
+    "label": "مشروع",
+    "all": "كل الأعمال",
+    "overview": "نظرة عامة",
+    "stack": "التقنيات",
+    "screens": "الصور",
+    "links": "الروابط",
+    "next": "المشروع التالي",
+    "nextCursor": "التالي",
+    "notFound": "المشروع غير موجود",
+    "back": "العودة لكل الأعمال ←"
   }
 }

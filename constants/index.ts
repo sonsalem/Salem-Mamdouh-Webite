@@ -8,6 +8,7 @@ export const BRAND_NAME_AR = "سَالم";
 export const NAV_LINKS = [
   { href: `/`, key: "home", label: "Home" },
   { href: `projects`, key: "projects", label: "Projects" },
+  { href: `experience`, key: "experience", label: "Experience" },
   { href: `about`, key: "about", label: "About" },
 ];
 

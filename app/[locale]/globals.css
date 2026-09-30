@@ -2,36 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------ Tokens */
+/* RGB triplets so Tailwind can apply opacity (bg-ink/10 etc). */
+:root {
+  --canvas: 242 245 249; /* paper #F2F5F9 */
+  --surface: 255 255 255;
+  --ink: 11 25 44; /* navy #0B192C */
+  --muted: 71 85 105;
+  --line: 11 25 44; /* used at low opacity for hairlines */
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: 7 17 31; /* #07111F */
+  --surface: 14 31 53; /* #0E1F35 */
+  --ink: 232 238 246;
+  --muted: 148 168 192;
+  --line: 232 238 246;
+  color-scheme: dark;
+}
+
 html {
-  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  transition: all 0.5s;
+  @apply bg-canvas text-ink;
+  font-family: "Poppins", system-ui, sans-serif;
+  transition: background-color 0.5s, color 0.5s;
   &.ar {
-    font-family: "Cairo", serif;
-    .circle-1,
-    .circle-2 {
-      right: 50% !important;
-      top: 50% !important;
-      translate: 50% -50%;
-    }
+    font-family: "Cairo", system-ui, sans-serif;
   }
-  &.en {
-    font-family: "Roboto Mono", serif;
-    .circle-1,
-    .circle-2 {
-      left: 50% !important;
-      top: 50% !important;
-      translate: -50% -50%;
-    }
-  }
+}
+
+::selection {
+  background: #ff6500;
+  color: #0b192c;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  scrollbar-width: thin;
 }
 ::-webkit-scrollbar-corner {
   display: none;
@@ -40,161 +50,175 @@ body {
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #f0bb78;
+  background: #ff6500;
   border-radius: 20px;
-  -webkit-border-radius: 20px;
 }
 
-.circle-1 {
-  animation: zoom 20s infinite linear;
-}
-.circle-2 {
-  animation: spinner 20s infinite linear;
-}
-
-@keyframes zoom {
-  0% {
-    transform: scale(1, 1);
+/* ------------------------------------------------------------- Typography */
+@layer components {
+  /* Italic display serif — Arabic has no italic serif, so it falls back to a
+     heavy Cairo instead. */
+  .font-display-i {
+    @apply font-display italic font-normal;
+  }
+  .ar .font-display-i {
+    font-family: "Cairo", sans-serif;
+    font-style: normal;
+    font-weight: 800;
   }
 
-  50% {
-    transform: scale(1.5, 1.5);
+  /* Outlined letters, as in the reference's "end". */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px currentColor;
   }
-  100% {
-    transform: scale(1, 1);
+  .text-outline-ink {
+    color: transparent;
+    -webkit-text-stroke: 1px #0b192c;
   }
-}
-
-@keyframes spinner {
-  100% {
-    -webkit-transform: translate3d(0px, 0px, 0px) rotateZ(-360deg);
-    transform: translate3d(0px, 0px, 0px) rotateZ(-360deg);
-  }
-}
-
-.cursor-animation {
-  animation: hideScroll 1s infinite linear;
-}
-
-@keyframes hideScroll {
-  0% {
-    top: 10px;
-  }
-  100% {
-    opacity: 0;
-    top: 35px;
-  }
-}
-
-.CurrserText {
-  animation: fadeIn 0.5s infinite alternate ease-in-out;
-}
-
-@keyframes fadeIn {
-  100% {
-    opacity: 0;
-  }
-}
-
-@media (width >=767px) {
-  .project:hover {
-    scale: 1.18;
-    position: absolute;
-    z-index: 10;
-
-    .texts {
-      max-height: 200px;
-      transition: all 1s 0.3s;
+  @media (min-width: 1024px) {
+    .text-outline,
+    .text-outline-ink {
+      -webkit-text-stroke-width: 1.5px;
     }
   }
-  .project:hover .links {
-    bottom: 20px;
+
+  /* Small parenthetical labels: "(01)", "(Scroll) — Down". */
+  .label {
+    @apply text-[11px] sm:text-xs tracking-wide;
+  }
+
+  /* Hairline rule that draws in (scaleX) from its start edge. */
+  .rule {
+    @apply block h-px w-full bg-line/20 origin-left rtl:origin-right;
+  }
+  .rule-ink {
+    @apply block h-px w-full bg-brand-navy/40 origin-left rtl:origin-right;
+  }
+
+  /* Link whose text rolls up on hover: the label is duplicated below itself. */
+  .roll {
+    @apply relative inline-flex overflow-hidden align-top;
+  }
+  .roll > span {
+    @apply block transition-transform duration-500 ease-expo;
+  }
+  .roll > span + span {
+    @apply absolute inset-x-0 top-full;
+  }
+  @media (hover: hover) {
+    .roll:hover > span,
+    .group:hover .roll > span {
+      transform: translateY(-100%);
+    }
   }
 }
 
-/* Swiper Navigation Arrows */
-.swiper-button-next,
-.swiper-button-prev {
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-  width: 40px; /* Circle size */
-  height: 40px; /* Circle size */
-  border-radius: 50%; /* Makes it circular */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: all 0.3s ease; /* Smooth transition */
+/* ------------------------------------------------------------ Split text */
+.split-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* Room for italic overhang and descenders so glyphs aren't clipped. */
+  padding: 0 0.08em 0.12em 0.02em;
+  margin: 0 -0.08em -0.12em -0.02em;
+}
+.ar .split-mask {
+  padding-bottom: 0.35em;
+  margin-bottom: -0.35em;
+}
+.split-inner {
+  display: inline-block;
+  will-change: transform;
 }
 
-@media (width >=767px) {
-  .swiper-button-next,
-  .swiper-button-prev {
-    opacity: 0; /* Hidden by default */
+/* Pre-hydration states. `motion` is added to <html> by an inline script only
+   when the visitor allows motion, so with reduced motion (or no JS) nothing is
+   ever hidden. GSAP animates these to their natural state. */
+.motion .split-inner {
+  transform: translateY(110%);
+}
+.motion [data-intro] {
+  visibility: hidden;
+}
+
+/* ------------------------------------------------------------ Intro loader */
+.intro-loader {
+  display: none;
+}
+.motion .intro-loader {
+  display: block;
+}
+.motion.intro-lock,
+.motion.intro-lock body {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------ Marquee */
+.marquee-track {
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------ Works (horizontal) */
+/* Added by GSAP on desktop only while the pinned horizontal scroll runs. */
+.works.is-horizontal {
+  height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.works.is-horizontal .works-track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  gap: 6vw;
+  padding: 4rem 8vw 0;
+  will-change: transform;
+}
+.works.is-horizontal .works-panel {
+  width: min(64vw, 1000px);
+}
+.works.is-horizontal .works-parallax {
+  margin: 0 -6%;
+}
+.works.is-horizontal .works-img {
+  aspect-ratio: auto;
+  height: 50svh;
+}
+.works.is-horizontal .works-progress {
+  display: block;
+}
+
+/* ------------------------------------------------------------ Custom cursor */
+@media (hover: hover) and (pointer: fine) {
+  .has-cursor [data-cursor] {
+    cursor: none;
   }
 }
 
-/* Hover effect for navigation arrows */
-.swiper-button-next,
-.swiper-button-prev {
-  background: rgba(255, 255, 255, 1);
-  min-width: 25px;
-  max-width: 25px;
-  min-height: 25px;
-  max-height: 25px;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Arrow icons */
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  content: "" !important;
-  left: 55%;
-  top: 50%;
-  translate: -50% -50%;
-  position: absolute;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-6 h-6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M8.25 4.5l7.5 7.5-7.5 7.5'/%3E%3C/svg%3E"); /* Right arrow SVG */
-  width: 15px;
-  height: 15px;
-  background-repeat: no-repeat;
-  background-position: center;
-  color: #333;
-}
-
-/* Flip the icon for the previous button */
-.swiper-button-prev::after {
-  left: 45%;
-  transform: rotate(180deg);
-}
-
-.project:hover .swiper-button-next,
-.project:hover .swiper-button-prev {
-  opacity: 1;
-}
-
-/* @media (max-width: 768px) {
-  .disAos[data-aos] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-} */
-
+/* ------------------------------------------------------------ Scroll to top */
 .totop {
-  min-width: 50px;
-  min-height: 50px;
-  max-width: 50px;
-  max-height: 50px;
-  border-radius: 50%;
-  z-index: 1000000000;
+  z-index: 90;
   opacity: 0;
+  transform: translateY(12px);
   pointer-events: none;
-  transition: 0.3s;
+  transition: opacity 0.4s, transform 0.4s;
 }
 .totop.show {
   opacity: 1;
-  pointer-events: unset;
+  transform: none;
+  pointer-events: auto;
 }
-.totop .inner {
-  min-width: 43px;
-  min-height: 43px;
-  max-width: 43px;
-  max-height: 43px;
-  border-radius: 50%;
+
+/* ------------------------------------------------------------ Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

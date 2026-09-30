@@ -1,22 +1,18 @@
 import { getTranslations } from "next-intl/server";
-import { Boxes } from "lucide-react";
 import Projects from "@/components/Projects";
+import SectionHeading from "@/components/SectionHeading";
 
 const page = async () => {
   const t = await getTranslations("titles");
+  const s = await getTranslations("sections");
 
   return (
-    <div className="container px-4 md:px-8 lg:px-16 xl:px-32 mx-auto py-52">
-      <div
-        data-aos="fade-down"
-        className="text-3xl mb-12 font-bold text-center flex justify-center items-center gap-2"
-      >
-        {t("My Projects").toUpperCase()}
-        <Boxes />
+    <section className="pt-32 md:pt-44 pb-24 md:pb-40">
+      <div className="px-4 md:px-8 lg:px-16 xl:px-24">
+        <SectionHeading as="h1" index="03" label={s("works")} title={t("My Projects")} className="!mb-8 md:!mb-12" />
       </div>
-
       <Projects />
-    </div>
+    </section>
   );
 };
 

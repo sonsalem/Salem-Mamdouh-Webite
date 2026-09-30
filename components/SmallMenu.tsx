@@ -1,78 +1,121 @@
 "use client";
-import { useParams } from "next/navigation";
-import { Globe, X } from "lucide-react";
-import React from "react";
+import { useParams, usePathname } from "next/navigation";
+import React, { useEffect, useRef } from "react";
 import { NAV_LINKS } from "@/constants";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { gsap, prefersReducedMotion } from "@/lib/motion";
 
+/**
+ * Full-screen mobile menu on the orange canvas. Big links slide up from their
+ * masks when it opens; Escape or the close button dismisses it.
+ */
 const SmallMenu = ({
   open,
   setOpen,
   changeLanguage,
 }: {
   open: boolean;
-  setOpen: any;
-  changeLanguage: any;
+  setOpen: (open: boolean) => void;
+  changeLanguage: () => void;
 }) => {
   // Translation
   const t = useTranslations("navbar");
 
   const { locale } = useParams();
+  const pathName = usePathname();
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  const WIDTH_MENU = 280;
-  const degree = open ? "0" : `-${WIDTH_MENU}px`;
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+    const links = panel.querySelectorAll("[data-menu-link]");
+    const extras = panel.querySelectorAll("[data-menu-extra]");
+
+    if (prefersReducedMotion()) {
+      gsap.set(panel, { autoAlpha: open ? 1 : 0, yPercent: 0 });
+      gsap.set([links, extras], { yPercent: 0, autoAlpha: 1 });
+      return;
+    }
+
+    if (open) {
+      gsap
+        .timeline()
+        .set(panel, { autoAlpha: 1 })
+        .fromTo(panel, { yPercent: -100 }, { yPercent: 0, duration: 0.8, ease: "expo.inOut" })
+        .fromTo(links, { yPercent: 110 }, { yPercent: 0, duration: 0.9, stagger: 0.06, ease: "expo.out" }, "<0.45")
+        .fromTo(extras, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.05 }, "<0.2");
+    } else {
+      gsap.to(panel, { yPercent: -100, duration: 0.6, ease: "expo.inOut", onComplete: () => void gsap.set(panel, { autoAlpha: 0 }) });
+    }
+  }, [open]);
+
+  // Lock page scroll + close on Escape while open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.documentElement.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open, setOpen]);
 
   return (
-    <>
-      <div
-        className={`bg-[#000000A1] w-full h-full fixed top-0 left-0 transition-all duration-100 ${
-          open ? "z-50" : "-z-[100] opacity-0"
-        }`}
-      ></div>
-      <div
-        className={`fixed top-0 bg-[#f9f9f9] pt-16 px-3 dark:bg-dark-200 h-[100vh] z-50 transition-all duration-300`}
-        style={{
-          [locale === "en" ? "right" : "left"]: degree,
-          width: `${WIDTH_MENU}px`,
-        }}
-      >
-        <X
-          onClick={() => setOpen(false)}
-          className="absolute right-4 top-4 cursor-pointer"
-        />
-        <ul className="flex flex-col gap-3">
-          {NAV_LINKS.map((link) => (
-            <li key={link.key}>
+    <div
+      ref={panelRef}
+      id="mobile-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t("Menu")}
+      aria-hidden={!open}
+      className="fixed inset-0 z-[130] bg-main text-brand-navy flex flex-col px-4 md:px-8 pt-5 pb-8 lg:hidden"
+      style={{ visibility: "hidden" }}
+    >
+      <div className="flex justify-between items-center h-11">
+        <span className="label">({t("Menu")})</span>
+        <button type="button" onClick={() => setOpen(false)} className="text-sm font-medium uppercase tracking-wide h-9">
+          {t("Close")}
+        </button>
+      </div>
+
+      <span className="rule-ink mt-4" />
+
+      <ul className="flex flex-col mt-6">
+        {NAV_LINKS.map((link, i) => {
+          const href = link.href === "/" ? `/${locale}` : `/${locale}/${link.href}`;
+          return (
+            <li key={link.key} className="overflow-hidden border-b border-brand-navy/30">
               <Link
+                data-menu-link
                 onClick={() => setOpen(false)}
-                href={`/${locale}/${link.href}`}
-                className="bg-white dark:bg-dark-300 block px-4 py-3 rounded-md"
+                href={href}
+                aria-current={pathName === href ? "page" : undefined}
+                className="flex items-baseline gap-3 py-3 font-display-i text-[13vw] sm:text-7xl leading-none"
               >
+                <span className="label not-italic font-sans">0{i + 1}</span>
                 {t(link.label)}
               </Link>
             </li>
-          ))}
-        </ul>
-        <div className="h-[1px] bg-gray-500 my-5"></div>
-        <div className="flex flex-col gap-3">
-          <div
-            onClick={() => changeLanguage()}
-            className="flex items-center gap-2 cursor-pointer bg-white dark:bg-dark-300 px-4 py-3 rounded-md"
-          >
-            <Globe size={18} className="relative" />
-            {t("Arabic")}
-          </div>
-          <Link
-            onClick={() => setOpen(false)}
-            href={`/${locale}/contact`}
-            className="bg-light-200 text-dark-text px-4 py-[7px] rounded-md dark:bg-dark-100 dark:text-light-text"
-          >
-            {t("Contact Us")}
-          </Link>
-        </div>
+          );
+        })}
+      </ul>
+
+      <div className="mt-auto flex items-center justify-between gap-4">
+        <button data-menu-extra type="button" onClick={() => changeLanguage()} className="text-sm font-medium underline underline-offset-4">
+          {t("Arabic")}
+        </button>
+        <Link
+          data-menu-extra
+          onClick={() => setOpen(false)}
+          href={`/${locale}/contact`}
+          className="bg-brand-navy text-brand-paper px-6 h-12 inline-flex items-center rounded-full text-sm font-medium"
+        >
+          {t("Contact Us")}
+        </Link>
       </div>
-    </>
+    </div>
   );
 };
 
