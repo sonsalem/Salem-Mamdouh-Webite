@@ -137,14 +137,14 @@ const Experiences = () => {
               <div data-row className="grid grid-cols-[56px_1fr] gap-x-5 md:gap-x-8 items-center">
                 <div
                   data-node
-                  className="relative z-10 w-14 h-14 rounded-full p-2 bg-surface border border-line/20 transition-[border-color,transform] duration-500 [&.is-lit]:border-main [&.is-lit]:scale-110"
+                  className="relative z-10 w-14 h-14 rounded-full p-3 overflow-hidden bg-surface border border-line/20 transition-[border-color,transform] duration-500 [&.is-lit]:border-main [&.is-lit]:scale-110"
                 >
                   <Image
                     src={experience.logo}
                     alt={experience.company}
                     width={56}
                     height={56}
-                    className="w-full h-full object-contain rounded-full"
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
