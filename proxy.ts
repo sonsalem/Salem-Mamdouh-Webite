@@ -1,14 +1,14 @@
 import createMiddleware from "next-intl/middleware";
+import { defaultLocale, locales } from "@/lib/i18n-config";
 
-const middleware = createMiddleware({
+// Next 16 renamed middleware to "proxy".
+export default createMiddleware({
   // A list of all locales that are supported
-  locales: ["en", "ar"],
+  locales: [...locales],
 
   // Used when no locale matches
-  defaultLocale: "en",
+  defaultLocale,
 });
-
-export default middleware;
 
 export const config = {
   // Match only internationalized pathnames
