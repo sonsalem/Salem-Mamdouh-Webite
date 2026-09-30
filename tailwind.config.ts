@@ -1,5 +1,14 @@
 import type { Config } from "tailwindcss";
 
+// Brand palette (shared with the dashboard)
+//   Primary orange  #FF6500  — the single loud colour: hero canvas, loader, hover fills
+//   Dark blue       #1E3E62  — secondary
+//   Dark navy       #0B192C  — ink
+//
+// Theme-aware tokens (canvas / ink / muted / line / surface) are CSS variables
+// defined in globals.css, so they flip with the .dark class.
+const themed = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 export default {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,31 +19,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        main: "#F0BB78",
+        canvas: themed("canvas"),
+        ink: themed("ink"),
+        muted: themed("muted"),
+        line: themed("line"),
+        surface: themed("surface"),
+        main: "#FF6500",
+        brand: {
+          orange: "#FF6500",
+          blue: "#1E3E62",
+          navy: "#0B192C",
+          paper: "#F2F5F9",
+        },
+        // Legacy tokens, kept for anything still using them.
         dark: {
-          gray: {
-            100: "#e8e8e8",
-            200: "#a6abb4",
-          },
-          text: "#f9f9f9",
-          "100": "#F0BB78",
-          "200": "#1c1b1e",
-          "300": "#111013",
+          gray: { 100: "#D8E1EC", 200: "#94A8C0" },
+          text: "#E8EEF6",
+          "100": "#FF6500",
+          "200": "#0E1F35",
+          "300": "#07111F",
         },
         light: {
-          // "100": "#FFF0DC",
-          // "200": "#F0BB78",
-          // "300": "#543A14",
-          // "400": "##131010",
-          gray: {
-            100: "#a6abb4",
-            200: "#777",
-          },
-          text: "#121212",
-          "100": "#FFF0DC",
-          "200": "#F0BB78",
-          "300": "#111013",
+          gray: { 100: "#94A3B8", 200: "#475569" },
+          text: "#0B192C",
+          "100": "#F2F5F9",
+          "200": "#FF6500",
+          "300": "#0B192C",
         },
+      },
+      fontFamily: {
+        sans: ["Poppins", "Cairo", "system-ui", "sans-serif"],
+        display: ["'Instrument Serif'", "Cairo", "Georgia", "serif"],
+      },
+      transitionTimingFunction: {
+        // Same curve as the reference's letter reveals.
+        expo: "cubic-bezier(0.7, 0.2, 0.1, 1)",
       },
     },
   },

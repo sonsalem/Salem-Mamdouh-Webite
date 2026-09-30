@@ -2,11 +2,20 @@
 
 import { useTranslations } from "next-intl";
 import { BRAND_NAME, BRAND_NAME_AR, NAV_LINKS } from "@/constants";
-import { Globe, Menu } from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap, onIntroDone, ScrollTrigger, useGsap } from "@/lib/motion";
 import SmallMenu from "./SmallMenu";
+import ThemeSwitch from "./ThemeSwitch";
+
+/** Text that rolls up to a copy of itself on hover. */
+const Roll = ({ children }: { children: string }) => (
+  <span className="roll">
+    <span>{children}</span>
+    <span aria-hidden="true">{children}</span>
+  </span>
+);
 
 const Navbar = () => {
   // Translation
@@ -35,57 +44,113 @@ const Navbar = () => {
   // Small Menu
   const [open, setOpen] = useState<boolean>(false);
 
+  // Over the orange hero until the page is scrolled.
+  const onHome = pathName === `/${locale}`;
+  const [scrolled, setScrolled] = useState(false);
+  const barRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const st = ScrollTrigger.create({
+      start: 40,
+      end: "max",
+      onToggle: (self) => setScrolled(self.isActive),
+    });
+    return () => st.kill();
+  }, []);
+
+  useGsap(
+    () => {
+      const bar = barRef.current!;
+      // Intro: nav items drop in once the loader has lifted.
+      const items = bar.querySelectorAll("[data-nav-item]");
+      gsap.set(items, { yPercent: -120, autoAlpha: 0 });
+      const stop = onIntroDone(() =>
+        gsap.to(items, { yPercent: 0, autoAlpha: 1, duration: 1, stagger: 0.06, ease: "expo.out", delay: 0.5 })
+      );
+
+      // Hide while scrolling down, reveal on the way back up.
+      const show = gsap.quickTo(bar, "yPercent", { duration: 0.5, ease: "power3.out" });
+      const st = ScrollTrigger.create({
+        start: 120,
+        end: "max",
+        onUpdate: (self) => show(self.direction === 1 ? -110 : 0),
+        onLeaveBack: () => show(0),
+      });
+
+      return () => {
+        stop();
+        st.kill();
+      };
+    },
+    barRef,
+    []
+  );
+
+  const solid = scrolled || !onHome;
+
   return (
     <>
-      <div className="p-4 fixed top-0 container z-50 left-1/2 -translate-x-1/2 max-w-[100vw]">
-        <div className="p-6  flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[100%] md:max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#181b24b2] backdrop-blur-sm">
-          {/* <div className="p-6 flex items-center justify-between rounded-xl border border-[#0000001A] dark:border-[#FFFFFF1A] max-w-[1050px] mx-auto bg-[#f9f9f9b2] dark:bg-[#1c1b1eF1] backdrop-blur-sm"> */}
-          <div className="flex gap-6">
-            <Link
-              href={`/${locale}`}
-              className="logo text-xl font-bold relative"
-            >
-              {locale == "en" ? BRAND_NAME : BRAND_NAME_AR}
-            </Link>
+      <header
+        ref={barRef}
+        className={`fixed top-0 inset-x-0 z-[100] transition-[background-color,color,border-color] duration-500 border-b ${
+          solid ? "bg-canvas/85 backdrop-blur-md text-ink border-line/15" : "bg-transparent text-brand-navy border-transparent"
+        }`}
+      >
+        <nav className="flex items-center justify-between gap-6 h-16 md:h-20 px-4 md:px-8 lg:px-16 xl:px-24">
+          <Link data-nav-item href={`/${locale}`} className="text-lg md:text-xl font-semibold tracking-tight">
+            <Roll>{locale == "en" ? BRAND_NAME : BRAND_NAME_AR}</Roll>
+          </Link>
 
-            <ul className="links lg:flex gap-6 hidden">
-              {NAV_LINKS.map((link) => (
-                <li key={link.key}>
-                  <Link href={`/${locale}/${link.href}`}>{t(link.label)}</Link>
+          <ul className="hidden lg:flex items-center gap-8 text-sm">
+            {NAV_LINKS.map((link, i) => {
+              const href = link.href === "/" ? `/${locale}` : `/${locale}/${link.href}`;
+              const active = pathName === href;
+              return (
+                <li key={link.key} data-nav-item>
+                  <Link href={href} className="flex items-baseline gap-1" aria-current={active ? "page" : undefined}>
+                    <span className={`label ${active ? "" : "opacity-60"}`}>{active ? "●" : `0${i + 1}`}</span>
+                    <Roll>{t(link.label)}</Roll>
+                  </Link>
                 </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex gap-4 items-center">
-            <div className="hidden md:flex gap-4 items-center">
-              <div
-                onClick={() => changeLanguage()}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <Globe size={18} className="relative" />
-                {t("Arabic")}
-              </div>
-              <Link
-                href={`/${locale}/contact`}
-                className="bg-light-200 text-dark-text px-4 py-[7px] rounded-md dark:bg-dark-100 dark:text-light-text"
-              >
-                {t("Contact Us")}
-              </Link>
+              );
+            })}
+          </ul>
+
+          <div className="flex gap-1 md:gap-3 items-center">
+            <div data-nav-item>
+              <ThemeSwitch />
             </div>
-            <div
-              onClick={() => setOpen((prev) => !prev)}
-              className="lg:hidden cursor-pointer"
+            <button
+              data-nav-item
+              type="button"
+              onClick={() => changeLanguage()}
+              className="hidden md:inline-flex h-9 px-3 items-center text-sm"
             >
-              <Menu />
-            </div>
+              <Roll>{t("Arabic")}</Roll>
+            </button>
+            <Link
+              data-nav-item
+              href={`/${locale}/contact`}
+              className={`hidden md:inline-flex h-10 px-5 items-center rounded-full text-sm font-medium transition-colors duration-300 ${
+                solid ? "bg-main text-brand-navy hover:bg-ink hover:text-canvas" : "bg-brand-navy text-brand-paper hover:bg-brand-paper hover:text-brand-navy"
+              }`}
+            >
+              <Roll>{t("Contact Us")}</Roll>
+            </Link>
+            <button
+              data-nav-item
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              className="lg:hidden h-9 px-2 text-sm font-medium uppercase tracking-wide"
+            >
+              {t("Menu")}
+            </button>
           </div>
-        </div>
-      </div>
-      <SmallMenu
-        open={open}
-        setOpen={setOpen}
-        changeLanguage={changeLanguage}
-      />
+        </nav>
+      </header>
+      <SmallMenu open={open} setOpen={setOpen} changeLanguage={changeLanguage} />
     </>
   );
 };

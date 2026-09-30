@@ -3,8 +3,11 @@
     "Home": "Home",
     "About": "About",
     "Projects": "Projects",
+    "Experience": "Experience",
     "Contact Us": "Contact Me",
-    "Arabic": "Arabic"
+    "Arabic": "Arabic",
+    "Menu": "Menu",
+    "Close": "Close"
   },
   "landing": {
     "Hi I'm": "Hi I'm",
@@ -14,19 +17,91 @@
   "titles": {
     "My Projects": "My Projects",
     "About Me": "About Me",
-    "Skills": "Skills"
+    "Skills": "Skills",
+    "Experience": "Experience"
   },
   "projects": {
-    "NEW": "NEW"
+    "NEW": "NEW",
+    "live": "Live site",
+    "code": "Source",
+    "drag": "Drag",
+    "view": "Visit",
+    "scrollHint": "(Scroll) → Works",
+    "prev": "Previous image",
+    "next": "Next image",
+    "open": "Open",
+    "details": "View project"
   },
   "contact": {
-    "Contact Us": "Contact Me"
+    "Contact Us": "Contact Me",
+    "label": "Contact",
+    "title1": "Let’s work",
+    "title2": "together",
+    "cta": "Say hello",
+    "findMe": "Find me on",
+    "open": "Open"
   },
   "footer": {
     "Contact Us": "Contact Me",
-    "Crated": "Crated By Salem Mamdouh"
+    "Crated": "Created by Salem Mamdouh"
   },
   "load": {
     "Loading": "Loading"
+  },
+  "experiences": {
+    "Present": "Present",
+    "Current": "Current",
+    "years": "{count, plural, one {# yr} other {# yrs}}",
+    "months": "{count, plural, one {# mo} other {# mos}}"
+  },
+  "theme": {
+    "toggle": "Change theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "hero": {
+    "hi": "(Hi, I'm)",
+    "name": "Salem Mamdouh Salem",
+    "line1a": "front",
+    "line1b": "end",
+    "line2": "developer",
+    "rail": "Salem Mamdouh — Portfolio",
+    "meta1": "Front-End Developer",
+    "meta2": "React · Next.js · TypeScript",
+    "meta3": "New Cairo, Egypt",
+    "scroll": "(Scroll) — Down",
+    "scrollCursor": "Scroll",
+    "metaLabel1": "Role",
+    "metaLabel2": "Stack",
+    "metaLabel3": "Based"
+  },
+  "sections": {
+    "about": "About",
+    "experience": "Experience",
+    "works": "Works",
+    "skills": "Skills",
+    "marquee1": "Salem Mamdouh",
+    "marquee2": "Front-End Developer",
+    "marquee3": "React · Next.js · TypeScript"
+  },
+  "about": {
+    "cv": "Download CV",
+    "cvCursor": "PDF",
+    "imageAlt": "Salem Mamdouh",
+    "imageLabel": "Portrait",
+    "location": "New Cairo, EG"
+  },
+  "project": {
+    "label": "Project",
+    "all": "All works",
+    "overview": "Overview",
+    "stack": "Stack",
+    "screens": "Screens",
+    "links": "Links",
+    "next": "Next project",
+    "nextCursor": "Next",
+    "notFound": "Project not found",
+    "back": "Back to all works →"
   }
 }
