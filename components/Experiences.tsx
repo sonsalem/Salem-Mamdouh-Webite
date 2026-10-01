@@ -25,18 +25,28 @@ const monthsBetween = (start: string, end: string) => {
 /** Ongoing roles first, then by end, then by start. */
 const sortPositions = (positions: Position[]) =>
   [...positions].sort(
-    (a, b) => (b.end ?? "9999-99").localeCompare(a.end ?? "9999-99") || b.start.localeCompare(a.start)
+    (a, b) =>
+      (b.end ?? "9999-99").localeCompare(a.end ?? "9999-99") ||
+      b.start.localeCompare(a.start),
   );
 
 const latestMonth = (experience: Experience) =>
-  experience.positions.reduce((max, p) => ((p.end ?? "9999-99") > max ? p.end ?? "9999-99" : max), "");
+  experience.positions.reduce(
+    (max, p) => ((p.end ?? "9999-99") > max ? (p.end ?? "9999-99") : max),
+    "",
+  );
 
 /** Earliest start → latest end (null while any role is ongoing). */
 const experienceSpan = (positions: Position[]) => {
   if (!positions.length) return null;
-  const start = positions.reduce((min, p) => (p.start < min ? p.start : min), positions[0].start);
+  const start = positions.reduce(
+    (min, p) => (p.start < min ? p.start : min),
+    positions[0].start,
+  );
   const current = positions.some((p) => p.end === null);
-  const end = current ? null : positions.reduce((max, p) => ((p.end ?? "") > max ? p.end! : max), "");
+  const end = current
+    ? null
+    : positions.reduce((max, p) => ((p.end ?? "") > max ? p.end! : max), "");
   return { start, end };
 };
 
@@ -63,7 +73,9 @@ const Experiences = () => {
       return (data || [])
         .map((row) => ({
           ...row,
-          positions: sortPositions(Array.isArray(row.positions) ? row.positions : []),
+          positions: sortPositions(
+            Array.isArray(row.positions) ? row.positions : [],
+          ),
         }))
         .sort((a, b) => latestMonth(b).localeCompare(latestMonth(a)));
     },
@@ -79,7 +91,16 @@ const Experiences = () => {
       gsap.fromTo(
         line,
         { scaleY: 0 },
-        { scaleY: 1, ease: "none", scrollTrigger: { trigger: line, start: "top 60%", end: "bottom 60%", scrub: 0.6 } }
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: line,
+            start: "top 60%",
+            end: "bottom 60%",
+            scrub: 0.6,
+          },
+        },
       );
 
       q("[data-node]").forEach((node) => {
@@ -102,19 +123,29 @@ const Experiences = () => {
       });
     },
     rootRef,
-    [experiences.length]
+    [experiences.length],
   );
 
   const month = (value: string) =>
-    format.dateTime(new Date(`${value}-01T00:00:00Z`), { month: "short", year: "numeric", timeZone: "UTC" });
+    format.dateTime(new Date(`${value}-01T00:00:00Z`), {
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    });
 
-  const period = (start: string, end: string | null) => `${month(start)} – ${end ? month(end) : t("Present")}`;
+  const period = (start: string, end: string | null) =>
+    `${month(start)} – ${end ? month(end) : t("Present")}`;
 
   const duration = (start: string, end: string | null) => {
     const total = monthsBetween(start, end ?? currentMonth());
     const years = Math.floor(total / 12);
     const months = total % 12;
-    return [years && t("years", { count: years }), months && t("months", { count: months })].filter(Boolean).join(" ");
+    return [
+      years && t("years", { count: years }),
+      months && t("months", { count: months }),
+    ]
+      .filter(Boolean)
+      .join(" ");
   };
 
   if (isLoading) return <Loader />;
@@ -124,17 +155,23 @@ const Experiences = () => {
     // must not widen the page on mobile.
     <div ref={rootRef} className="relative overflow-x-clip">
       {/* Track + scrubbed fill. Centred on the 56px node column. */}
-      <div className="absolute start-[27px] top-7 bottom-10 w-px bg-line/20" />
-      <div data-line className="absolute start-[27px] top-7 bottom-10 w-px bg-main origin-top" />
+      <div className="absolute start-[43px] top-7 bottom-10 w-px bg-line/20" />
+      <div
+        data-line
+        className="absolute start-[43px] top-7 bottom-10 w-px bg-main origin-top"
+      />
 
       <div className="flex flex-col gap-16 md:gap-24">
         {experiences.map((experience, e) => {
           const span = experienceSpan(experience.positions);
 
           return (
-            <section key={experience.id}>
+            <section key={experience.id} className="px-4">
               {/* Company */}
-              <div data-row className="grid grid-cols-[56px_1fr] gap-x-5 md:gap-x-8 items-center">
+              <div
+                data-row
+                className="grid grid-cols-[56px_1fr] gap-x-5 md:gap-x-8 items-center"
+              >
                 <div
                   data-node
                   className="relative z-10 w-14 h-14 rounded-full p-3 overflow-hidden bg-surface border border-line/20 transition-[border-color,transform] duration-500 [&.is-lit]:border-main [&.is-lit]:scale-110"
@@ -149,7 +186,9 @@ const Experiences = () => {
                 </div>
                 <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
                   <div>
-                    <span className="label text-muted">({String(e + 1).padStart(2, "0")})</span>
+                    <span className="label text-muted">
+                      ({String(e + 1).padStart(2, "0")})
+                    </span>
                     <h3 className="text-3xl md:text-5xl lg:text-6xl font-medium uppercase tracking-tight leading-none">
                       {experience.company}
                     </h3>
@@ -162,7 +201,11 @@ const Experiences = () => {
                 </div>
               </div>
               {experience.description && (
-                <p data-row className="ms-[76px] md:ms-[88px] mt-3 text-muted max-w-2xl">
+                <p
+                  data-row
+                  dir="auto"
+                  className="ms-[76px] md:ms-[88px] mt-3 text-muted max-w-2xl rtl:text-right"
+                >
                   {experience.description}
                 </p>
               )}
@@ -173,7 +216,11 @@ const Experiences = () => {
                   const current = position.end === null;
 
                   return (
-                    <div key={position.id} data-row className="grid grid-cols-[56px_1fr] gap-x-5 md:gap-x-8">
+                    <div
+                      key={position.id}
+                      data-row
+                      className="grid grid-cols-[56px_1fr] gap-x-5 md:gap-x-8"
+                    >
                       <div className="relative flex justify-center pt-7">
                         <span
                           data-node
@@ -181,7 +228,9 @@ const Experiences = () => {
                             current ? "bg-main" : "bg-line/30"
                           }`}
                         >
-                          {current && <span className="absolute inset-0 rounded-full bg-main animate-ping opacity-60" />}
+                          {current && (
+                            <span className="absolute inset-0 rounded-full bg-main animate-ping opacity-60" />
+                          )}
                         </span>
                       </div>
 
@@ -192,17 +241,26 @@ const Experiences = () => {
                               {position.title}
                             </span>
                             {current && (
-                              <span className="label px-2 py-0.5 bg-main text-brand-navy">{t("Current")}</span>
+                              <span className="label px-2 py-0.5 bg-main text-brand-navy">
+                                {t("Current")}
+                              </span>
                             )}
                           </div>
                           <div className="label mt-1 text-muted">
-                            <span dir="ltr">{period(position.start, position.end)}</span>
+                            <span dir="ltr">
+                              {period(position.start, position.end)}
+                            </span>
                             {" · "}
                             {duration(position.start, position.end)}
                           </div>
                         </div>
                         {position.description && (
-                          <p className="md:col-span-7 text-sm leading-6 text-muted">{position.description}</p>
+                          <p
+                            dir="auto"
+                            className="md:col-span-7 text-sm leading-6 text-muted rtl:text-right"
+                          >
+                            {position.description}
+                          </p>
                         )}
                       </div>
                     </div>

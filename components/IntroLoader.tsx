@@ -16,6 +16,7 @@ const IntroLoader = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const bandRef = useRef<HTMLDivElement>(null);
   const countRef = useRef<HTMLSpanElement>(null);
+  const mountedRef = useRef(false);
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
@@ -58,10 +59,18 @@ const IntroLoader = () => {
       }, "+=0.05")
       .to(root, { yPercent: -100, duration: 1.1 }, "<");
 
+    mountedRef.current = true;
+
     return () => {
       tl.kill();
       html.classList.remove("intro-lock");
-      markIntroDone();
+      // Strict Mode unmounts and immediately remounts in dev; opening the gate
+      // here would play the hero intro behind the loader. Only do it if the
+      // loader really went away.
+      mountedRef.current = false;
+      setTimeout(() => {
+        if (!mountedRef.current) markIntroDone();
+      }, 0);
     };
   }, []);
 

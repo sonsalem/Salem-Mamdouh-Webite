@@ -5,7 +5,6 @@ import Description from "@/types/about";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import { useRef } from "react";
 import { gsap, useGsap } from "@/lib/motion";
 import Loader from "./Loader";
@@ -52,84 +51,66 @@ const About = () => {
         duration: 1,
         scrollTrigger: { trigger: q("[data-rise]")[0], start: "top 88%" },
       });
-
-      // Image: clip reveal from the bottom, then a slow parallax inside its frame.
-      const frame = q("[data-frame]")[0];
-      gsap.fromTo(
-        frame,
-        { clipPath: "inset(100% 0% 0% 0%)" },
-        { clipPath: "inset(0% 0% 0% 0%)", duration: 1.6, ease: "expo.inOut", scrollTrigger: { trigger: frame, start: "top 80%" } }
-      );
-      gsap.fromTo(
-        q("[data-frame] img"),
-        { yPercent: -8, scale: 1.18 },
-        { yPercent: 8, scale: 1.08, ease: "none", scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true } }
-      );
     },
     rootRef,
     [texts.length, locale]
   );
 
   return (
-    <div ref={rootRef} className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10">
-      <div className="lg:col-span-7 flex flex-col gap-8">
-        {loadingAbout ? (
-          <Loader />
-        ) : (
-          <>
-            {statement && (
-              <p data-statement className="text-2xl sm:text-3xl lg:text-[2.6rem] leading-[1.25] font-medium tracking-tight">
-                {statement.split(/\s+/).map((word, i) => (
-                  <span key={i} data-word>
-                    {word}{" "}
-                  </span>
-                ))}
-              </p>
-            )}
-            <div className="grid sm:grid-cols-2 gap-6 text-muted leading-7">
-              {rest.map((text, i) => (
-                <p data-rise key={i}>
-                  {text}
-                </p>
-              ))}
-            </div>
-          </>
-        )}
-
-        <div data-rise className="pt-2">
-          <Magnetic>
-            <a
-              href="/Salem Mamdouh Salem CV.pdf"
-              download
-              data-cursor={t("cvCursor")}
-              className="group relative inline-flex items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full border border-ink/40 text-sm font-medium overflow-hidden"
-            >
-              <span className="absolute inset-0 bg-main translate-y-full group-hover:translate-y-0 group-focus-visible:translate-y-0 transition-transform duration-500 ease-expo rounded-full" />
-              <span className="relative flex flex-col items-center gap-1 group-hover:text-brand-navy transition-colors">
-                {t("cv")}
-                <span aria-hidden="true" className="text-lg">
-                  ↓
-                </span>
+    <div ref={rootRef} className="flex flex-col gap-12 md:gap-16">
+      {loadingAbout ? (
+        <Loader />
+      ) : (
+        statement && (
+          <p
+            data-statement
+            className="max-w-6xl text-3xl/[1.25] sm:text-4xl/[1.2] lg:text-[3.4rem]/[1.15] font-medium tracking-tight"
+          >
+            {statement.split(/\s+/).map((word, i) => (
+              <span key={i} data-word>
+                {word}{" "}
               </span>
-            </a>
-          </Magnetic>
-        </div>
-      </div>
+            ))}
+          </p>
+        )
+      )}
 
-      <div className="lg:col-span-5 lg:col-start-8">
-        <div data-frame className="relative overflow-hidden aspect-[4/5] bg-surface">
-          <Image
-            src="/about.png"
-            alt={t("imageAlt")}
-            fill
-            sizes="(min-width: 1024px) 40vw, 100vw"
-            className="object-contain will-change-transform"
-          />
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 border-t border-line/20 pt-8 md:pt-10">
+        <div className="lg:col-span-4 flex items-start justify-between gap-8 lg:flex-col lg:justify-start">
+          <p data-rise className="label text-muted">
+            ({t("basedLabel")})
+            <span className="block mt-1 text-base font-medium text-ink">{t("location")}</span>
+          </p>
+
+          <div data-rise>
+            <Magnetic>
+              <a
+                href="/Salem Mamdouh Salem CV.pdf"
+                download
+                data-cursor={t("cvCursor")}
+                className="group relative inline-flex items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full border border-ink/40 text-sm font-medium overflow-hidden"
+              >
+                <span className="absolute inset-0 bg-main translate-y-full group-hover:translate-y-0 group-focus-visible:translate-y-0 transition-transform duration-500 ease-expo rounded-full" />
+                <span className="relative flex flex-col items-center gap-1 group-hover:text-brand-navy transition-colors">
+                  {t("cv")}
+                  <span aria-hidden="true" className="text-lg">
+                    ↓
+                  </span>
+                </span>
+              </a>
+            </Magnetic>
+          </div>
         </div>
-        <p className="label mt-3 text-muted flex justify-between">
-          <span>({t("imageLabel")})</span>
-          <span>{t("location")}</span>
-        </p>
+
+        {!loadingAbout && (
+          <div className="lg:col-span-8 grid sm:grid-cols-2 gap-6 lg:gap-10 text-muted leading-7 lg:text-lg lg:leading-8">
+            {rest.map((text, i) => (
+              <p data-rise key={i}>
+                {text}
+              </p>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
