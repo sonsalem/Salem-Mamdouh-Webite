@@ -74,7 +74,7 @@ const ContactMe = ({ showCta = true, index = "05" }: { showCta?: boolean; index?
         </div>
 
         <div className="relative mt-10 md:mt-16">
-          <h2 data-drift className="leading-[0.88] tracking-tight">
+          <h2 data-drift className="stack-title leading-[0.88] tracking-tight">
             <SplitText text={t("title1")} className="block font-display-i text-[18vw] md:text-[14vw]" />
             <SplitText
               text={t("title2")}

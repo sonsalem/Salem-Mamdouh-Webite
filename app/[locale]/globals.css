@@ -82,6 +82,14 @@ body {
       -webkit-text-stroke-width: 1.5px;
     }
   }
+  /* A stroke traces every overlapping contour of joined Arabic letters, so it
+     shows seams inside the word — Arabic gets a muted fill instead. */
+  .ar .text-outline,
+  .ar .text-outline-ink {
+    -webkit-text-stroke-width: 0;
+    color: currentColor;
+    opacity: 0.4;
+  }
 
   /* Small parenthetical labels: "(01)", "(Scroll) — Down". */
   .label {
@@ -126,6 +134,15 @@ body {
 .ar .split-mask {
   padding-bottom: 0.35em;
   margin-bottom: -0.35em;
+}
+/* Arabic stands taller (dots, shadda, deep descenders), so the tight Latin
+   leading of the big stacked titles makes their lines collide. */
+.ar .hero-title,
+.ar .stack-title {
+  line-height: 1.2;
+}
+.ar [data-statement] {
+  line-height: 1.45;
 }
 .split-inner {
   display: inline-block;

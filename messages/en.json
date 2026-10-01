@@ -88,8 +88,7 @@
   "about": {
     "cv": "Download CV",
     "cvCursor": "PDF",
-    "imageAlt": "Salem Mamdouh",
-    "imageLabel": "Portrait",
+    "basedLabel": "Based",
     "location": "New Cairo, EG"
   },
   "project": {

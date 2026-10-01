@@ -76,7 +76,7 @@ const Landing = () => {
         aria-hidden="true"
       >
         <span className="label [writing-mode:vertical-rl] rotate-180 tracking-[0.3em] uppercase whitespace-nowrap">
-          {t("rail")} — ©{year}
+          {t("rail")} — <span dir="ltr">©{year}</span>
         </span>
       </div>
 
@@ -94,7 +94,7 @@ const Landing = () => {
               <span className="block">{t("hi")}</span>
               <span className="block font-medium text-sm sm:text-base">{t("name")}</span>
             </p>
-            <p data-intro className="font-display-i text-2xl md:text-4xl">(©{year})</p>
+            <p data-intro dir="ltr" className="font-display-i text-2xl md:text-4xl">(©{year})</p>
           </div>
           <span data-rule-x className="rule-ink" />
         </div>

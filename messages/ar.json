@@ -88,8 +88,7 @@
   "about": {
     "cv": "تحميل سيرتي الذاتية",
     "cvCursor": "PDF",
-    "imageAlt": "سالم ممدوح",
-    "imageLabel": "صورة",
+    "basedLabel": "المكان",
     "location": "القاهرة الجديدة"
   },
   "project": {

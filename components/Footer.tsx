@@ -42,7 +42,7 @@ const Footer = () => {
         <span className="block h-px bg-brand-paper/20 mt-10" />
         <div className="label flex flex-wrap justify-between gap-3 pt-4 text-brand-paper/70">
           <span>{t("Crated")}</span>
-          <span>(©{year})</span>
+          <span dir="ltr">(©{year})</span>
         </div>
       </div>
     </footer>
