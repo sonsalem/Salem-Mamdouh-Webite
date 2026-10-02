@@ -15,6 +15,15 @@ const nextConfig: NextConfig = {
       ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }]
       : [],
   },
+  // The CV keeps one URL; make browsers revalidate it so a new PDF isn't
+  // hidden behind a cached copy.
+  async headers() {
+    return [{ source: "/Salem-Mamdouh-CV.pdf", headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }] }];
+  },
+  // Old CV link (already shared around) → new one.
+  async redirects() {
+    return [{ source: "/Salem%20Mamdouh%20Salem%20CV.pdf", destination: "/Salem-Mamdouh-CV.pdf", permanent: true }];
+  },
 };
 
 export default withNextIntl(nextConfig);
