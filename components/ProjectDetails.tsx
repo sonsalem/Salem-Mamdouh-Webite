@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useRef } from "react";
@@ -9,6 +8,7 @@ import { EXPO, gsap, useGsap } from "@/lib/motion";
 import { projectHref, useProjects } from "@/lib/projects";
 import Loader from "./Loader";
 import Magnetic from "./motion/Magnetic";
+import Shot from "./Shot";
 import { revealSplit } from "./motion/reveals";
 import SplitText from "./motion/SplitText";
 
@@ -16,8 +16,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
  * A single project: huge title, an overview + facts index, the cover image,
- * the rest of the screenshots in an editorial grid (each clip-revealed with a
- * slow parallax), and a big orange "next project" link to keep browsing.
+ * the rest of the screenshots in an editorial grid (each clip-revealed, and
+ * scrolled top to bottom on hover when it's a long page), and a big orange "next project" link to keep browsing.
  */
 const ProjectDetails = ({ id }: { id: number }) => {
   const t = useTranslations("project");
@@ -41,17 +41,13 @@ const ProjectDetails = ({ id }: { id: number }) => {
       gsap.from(q("[data-fade]"), { y: 30, autoAlpha: 0, duration: 1, stagger: 0.08, delay: 0.6, ease: "power3.out" });
       gsap.fromTo(q("[data-rule]"), { scaleX: 0 }, { scaleX: 1, duration: 1.4, ease: "expo.inOut", stagger: 0.1, delay: 0.3 });
 
-      // Every screenshot: clip reveal from the bottom + parallax inside the frame.
+      // Every screenshot: clip reveal from the bottom. (No zoom/parallax inside
+      // the frame, so the whole width of the screenshot stays visible.)
       q("[data-shot]").forEach((shot) => {
         gsap.fromTo(
           shot,
           { clipPath: "inset(100% 0% 0% 0%)" },
           { clipPath: "inset(0% 0% 0% 0%)", duration: 1.5, ease: "expo.inOut", scrollTrigger: { trigger: shot, start: "top 85%" } }
-        );
-        gsap.fromTo(
-          shot.querySelector("img"),
-          { yPercent: -6, scale: 1.14 },
-          { yPercent: 6, scale: 1.04, ease: "none", scrollTrigger: { trigger: shot, start: "top bottom", end: "bottom top", scrub: true } }
         );
       });
 
@@ -184,16 +180,9 @@ const ProjectDetails = ({ id }: { id: number }) => {
       {/* ------------------------------------------------------------ Images */}
       <div className="px-4 md:px-8 lg:px-16 xl:px-24 mt-16 md:mt-28 pb-24 md:pb-40">
         {cover && (
-          <figure>
-            <div data-shot className="relative overflow-hidden aspect-[16/10] md:aspect-[16/9] bg-surface">
-              <Image
-                src={cover}
-                alt={`${project.name} — 1`}
-                fill
-                priority
-                sizes="100vw"
-                className="object-cover will-change-transform"
-              />
+          <figure className="group/shots">
+            <div data-shot className="bg-surface">
+              <Shot src={cover} alt={`${project.name} — 1`} sizes="100vw" eager />
             </div>
             <figcaption className="label text-muted mt-3 flex justify-between">
               <span dir="ltr">(01 / {pad(project.images.length)})</span>
@@ -208,17 +197,12 @@ const ProjectDetails = ({ id }: { id: number }) => {
               // Rhythm: every third screenshot runs full width.
               const wide = i % 3 === 2 || (i === shots.length - 1 && i % 3 === 0);
               return (
-                <figure key={src} className={wide ? "md:col-span-2" : ""}>
-                  <div
-                    data-shot
-                    className={`relative overflow-hidden bg-surface ${wide ? "aspect-[16/10] md:aspect-[21/9]" : "aspect-[16/10]"}`}
-                  >
-                    <Image
+                <figure key={src} className={`group/shots ${wide ? "md:col-span-2" : ""}`}>
+                  <div data-shot className="bg-surface">
+                    <Shot
                       src={src}
                       alt={`${project.name} — ${i + 2}`}
-                      fill
                       sizes={wide ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
-                      className="object-cover will-change-transform"
                     />
                   </div>
                   <figcaption dir="ltr" className="label text-muted mt-3 rtl:text-right">

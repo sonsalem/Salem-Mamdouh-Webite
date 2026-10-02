@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Shot from "./Shot";
 
 /** Thin line arrow with a small head, like the reference's "View →". */
 const LineArrow = ({ flip = false }: { flip?: boolean }) => (
@@ -31,55 +31,6 @@ const Slide = ({ href, name, children }: { href?: string; name: string; children
   ) : (
     <>{children}</>
   );
-
-/**
- * A 16:9 window onto a screenshot shown at full width, never cropped sideways.
- * Long (full-page) shots start at the top and scroll to the bottom while the
- * gallery is hovered, at a steady reading speed; shorter ones sit centred.
- */
-const Shot = ({ src, alt }: { src: string; alt: string }) => {
-  const frameRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [overflow, setOverflow] = useState(0);
-
-  const measure = () => {
-    const frame = frameRef.current;
-    const img = imgRef.current;
-    if (!frame || !img || !img.complete) return;
-    setOverflow(Math.max(0, img.offsetHeight - frame.offsetHeight));
-  };
-
-  useEffect(() => {
-    const ro = new ResizeObserver(measure);
-    if (frameRef.current) ro.observe(frameRef.current);
-    return () => ro.disconnect();
-  }, []);
-
-  return (
-    <div ref={frameRef} className="relative w-full aspect-video overflow-hidden flex items-center">
-      <Image
-        ref={imgRef}
-        src={src}
-        alt={alt}
-        width={1600}
-        height={900}
-        sizes="(min-width: 1024px) 64vw, 100vw"
-        onLoad={measure}
-        style={
-          {
-            "--shot-shift": `-${overflow}px`,
-            "--shot-time": `${Math.max(1.2, overflow / 300)}s`,
-          } as React.CSSProperties
-        }
-        className={`w-full h-auto shrink-0 ${
-          overflow
-            ? "self-start transition-transform duration-700 ease-expo group-hover/shots:[transform:translateY(var(--shot-shift))] group-hover/shots:[transition-duration:var(--shot-time)] group-hover/shots:ease-linear"
-            : ""
-        }`}
-      />
-    </div>
-  );
-};
 
 /**
  * Project image carousel. Its controls sit on the frame itself: two
@@ -117,7 +68,7 @@ const Gallery = ({
         {images.map((img, i) => (
           <SwiperSlide key={i}>
             <Slide href={href} name={name}>
-              <Shot src={img} alt={`${name} — ${i + 1}`} />
+              <Shot src={img} alt={`${name} — ${i + 1}`} sizes="(min-width: 1024px) 64vw, 100vw" />
             </Slide>
           </SwiperSlide>
         ))}
