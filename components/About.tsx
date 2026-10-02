@@ -2,6 +2,7 @@
 
 import supabase from "@/config/supabaseClients";
 import Description from "@/types/about";
+import type Cv from "@/types/cv";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
@@ -24,6 +25,18 @@ const About = () => {
     },
     gcTime: 1000 * 60,
   });
+
+  // The CV marked active in the dashboard; the bundled PDF covers loading and
+  // the case where none has been uploaded yet.
+  const { data: cv } = useQuery<Cv | null>({
+    queryKey: ["cv"],
+    queryFn: async () => {
+      const { data } = await supabase.from("cvs").select("*").eq("is_active", true).limit(1).maybeSingle();
+      return data;
+    },
+  });
+  // `download` is ignored cross-origin, so ask Supabase Storage for an attachment.
+  const cvHref = cv ? `${cv.file_url}?download=${encodeURIComponent(cv.file_name)}` : CV_PATH;
 
   const texts = descriptions.map((desc) => (locale === "ar" ? desc.descriptions_ar : desc.descriptions_en).trim());
   const [statement, ...rest] = texts;
@@ -86,8 +99,8 @@ const About = () => {
           <div data-rise>
             <Magnetic>
               <a
-                href={CV_PATH}
-                download={CV_DOWNLOAD_NAME}
+                href={cvHref}
+                download={cv?.file_name ?? CV_DOWNLOAD_NAME}
                 data-cursor={t("cvCursor")}
                 className="group relative inline-flex items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full border border-ink/40 text-sm font-medium overflow-hidden"
               >
