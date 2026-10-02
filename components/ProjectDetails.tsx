@@ -140,7 +140,7 @@ const ProjectDetails = ({ id }: { id: number }) => {
               <dt className="label text-muted">({t("screens")})</dt>
               <dd className="font-display-i text-2xl">{pad(project.images.length)}</dd>
             </div>
-            {(project.liveDemo || project.github) && (
+            {(project.liveDemo || project.github || project.githubPrivate) && (
               <div data-fade className="py-4 border-b border-line/20">
                 <dt className="label text-muted mb-3">({t("links")})</dt>
                 <dd className="flex flex-wrap gap-3">
@@ -157,7 +157,11 @@ const ProjectDetails = ({ id }: { id: number }) => {
                       </a>
                     </Magnetic>
                   )}
-                  {project.github && (
+                  {project.githubPrivate ? (
+                    <span className="inline-flex items-center h-12 px-6 rounded-full border border-dashed border-line/40 text-sm font-medium text-muted">
+                      {tp("private")}
+                    </span>
+                  ) : project.github && (
                     <Magnetic>
                       <a
                         href={project.github}

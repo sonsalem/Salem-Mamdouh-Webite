@@ -125,7 +125,9 @@ const Projects = () => {
                       <span className="text-main">{t("live")} ↗</span>
                     </a>
                   )}
-                  {project.github && (
+                  {project.githubPrivate ? (
+                    <span className="text-muted">{t("private")}</span>
+                  ) : project.github && (
                     <a href={project.github} target="_blank" rel="noopener noreferrer" data-cursor={t("code")} className="roll">
                       <span>{t("code")} ↗</span>
                       <span className="text-main">{t("code")} ↗</span>

@@ -5,8 +5,9 @@ export const BRAND_NAME_AR = "سَالم";
 
 // CV
 
-// Lives in /public. Its Cache-Control header (next.config.ts) makes browsers
-// re-check it, so replacing the PDF shows up without renaming it.
+// The live CV is the one marked active in the dashboard (`cvs` table). This
+// bundled copy is the fallback while it loads or if none is active. Its
+// Cache-Control header (next.config.ts) keeps browsers from serving a stale one.
 export const CV_PATH = "/Salem-Mamdouh-CV.pdf";
 export const CV_DOWNLOAD_NAME = "Salem Mamdouh - Front-End Developer CV.pdf";
 
