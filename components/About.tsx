@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useRef } from "react";
+import { CV_DOWNLOAD_NAME, CV_PATH } from "@/constants";
 import { gsap, useGsap } from "@/lib/motion";
 import Loader from "./Loader";
 import Magnetic from "./motion/Magnetic";
@@ -85,8 +86,8 @@ const About = () => {
           <div data-rise>
             <Magnetic>
               <a
-                href="/Salem Mamdouh Salem CV.pdf"
-                download
+                href={CV_PATH}
+                download={CV_DOWNLOAD_NAME}
                 data-cursor={t("cvCursor")}
                 className="group relative inline-flex items-center justify-center w-36 h-36 md:w-40 md:h-40 rounded-full border border-ink/40 text-sm font-medium overflow-hidden"
               >

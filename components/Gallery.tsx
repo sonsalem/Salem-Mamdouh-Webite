@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -33,8 +33,56 @@ const Slide = ({ href, name, children }: { href?: string; name: string; children
   );
 
 /**
- * Project image carousel. Its controls sit on the frame itself (not inside the
- * parallax layer, which is wider than the frame and would clip them): two
+ * A 16:9 window onto a screenshot shown at full width, never cropped sideways.
+ * Long (full-page) shots start at the top and scroll to the bottom while the
+ * gallery is hovered, at a steady reading speed; shorter ones sit centred.
+ */
+const Shot = ({ src, alt }: { src: string; alt: string }) => {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [overflow, setOverflow] = useState(0);
+
+  const measure = () => {
+    const frame = frameRef.current;
+    const img = imgRef.current;
+    if (!frame || !img || !img.complete) return;
+    setOverflow(Math.max(0, img.offsetHeight - frame.offsetHeight));
+  };
+
+  useEffect(() => {
+    const ro = new ResizeObserver(measure);
+    if (frameRef.current) ro.observe(frameRef.current);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <div ref={frameRef} className="relative w-full aspect-video overflow-hidden flex items-center">
+      <Image
+        ref={imgRef}
+        src={src}
+        alt={alt}
+        width={1600}
+        height={900}
+        sizes="(min-width: 1024px) 64vw, 100vw"
+        onLoad={measure}
+        style={
+          {
+            "--shot-shift": `-${overflow}px`,
+            "--shot-time": `${Math.max(1.2, overflow / 300)}s`,
+          } as React.CSSProperties
+        }
+        className={`w-full h-auto shrink-0 ${
+          overflow
+            ? "self-start transition-transform duration-700 ease-expo group-hover/shots:[transform:translateY(var(--shot-shift))] group-hover/shots:[transition-duration:var(--shot-time)] group-hover/shots:ease-linear"
+            : ""
+        }`}
+      />
+    </div>
+  );
+};
+
+/**
+ * Project image carousel. Its controls sit on the frame itself: two
  * hairline circles that flood orange on hover, and a "(01 / 06)" counter.
  */
 const Gallery = ({
@@ -58,31 +106,22 @@ const Gallery = ({
     "group/btn relative w-11 h-11 md:w-12 md:h-12 rounded-full border border-brand-navy/30 bg-brand-paper/90 text-brand-navy backdrop-blur-sm flex items-center justify-center overflow-hidden transition-colors duration-300 hover:border-main focus-visible:outline focus-visible:outline-2 focus-visible:outline-main";
 
   return (
-    <div className="gallery relative min-w-0 overflow-hidden bg-surface" dir="ltr" data-cursor={labels.cursor}>
-      <div data-parallax className="works-parallax">
-        <Swiper
-          spaceBetween={0}
-          slidesPerView={1}
-          loop={many}
-          onSwiper={setSwiper}
-          onSlideChange={(s) => setIndex(s.realIndex)}
-        >
-          {images.map((img, i) => (
-            <SwiperSlide key={i}>
-              <Slide href={href} name={name}>
-                <Image
-                  src={img}
-                  alt={`${name} — ${i + 1}`}
-                  width={1600}
-                  height={900}
-                  sizes="(min-width: 1024px) 70vw, 100vw"
-                  className="works-img w-full aspect-[16/9] object-cover transition-transform duration-700 ease-expo group-hover:scale-[1.03]"
-                />
-              </Slide>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+    <div className="gallery group/shots relative min-w-0 overflow-hidden bg-surface" dir="ltr" data-cursor={labels.cursor}>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        loop={many}
+        onSwiper={setSwiper}
+        onSlideChange={(s) => setIndex(s.realIndex)}
+      >
+        {images.map((img, i) => (
+          <SwiperSlide key={i}>
+            <Slide href={href} name={name}>
+              <Shot src={img} alt={`${name} — ${i + 1}`} />
+            </Slide>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       {many && (
         <div className="absolute z-10 bottom-3 right-3 md:bottom-4 md:right-4 flex items-center gap-2">

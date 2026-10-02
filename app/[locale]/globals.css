@@ -193,15 +193,9 @@ body {
   padding: 4rem 8vw 0;
   will-change: transform;
 }
+/* Panels keep their 16:9 shots at most half the viewport tall. */
 .works.is-horizontal .works-panel {
-  width: min(64vw, 1000px);
-}
-.works.is-horizontal .works-parallax {
-  margin: 0 -6%;
-}
-.works.is-horizontal .works-img {
-  aspect-ratio: auto;
-  height: 50svh;
+  width: min(64vw, 1000px, 50svh * 16 / 9);
 }
 .works.is-horizontal .works-progress {
   display: block;

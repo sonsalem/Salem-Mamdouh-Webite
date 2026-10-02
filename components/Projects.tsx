@@ -11,8 +11,7 @@ import Loader from "./Loader";
 
 /**
  * Works. On desktop the section pins and vertical scrolling drives the panels
- * sideways (the reference's horizontal scroll), with a progress hairline and a
- * little parallax on each image. On smaller screens, or with reduced motion,
+ * sideways (the reference's horizontal scroll), with a progress hairline. On smaller screens, or with reduced motion,
  * it's a plain vertical stack.
  */
 const Projects = () => {
@@ -36,7 +35,7 @@ const Projects = () => {
         root.classList.add("is-horizontal");
         const distance = () => track.scrollWidth - window.innerWidth;
 
-        const scroll = gsap.to(track, {
+        gsap.to(track, {
           x: () => (rtl ? distance() : -distance()),
           ease: "none",
           scrollTrigger: {
@@ -55,25 +54,6 @@ const Projects = () => {
           { scaleX: 0 },
           { scaleX: 1, ease: "none", scrollTrigger: { trigger: root, start: "top top", end: () => `+=${distance()}`, scrub: true } }
         );
-
-        // Each panel's image drifts against the scroll direction.
-        root.querySelectorAll<HTMLElement>("[data-panel]").forEach((panel) => {
-          gsap.fromTo(
-            panel.querySelector("[data-parallax]"),
-            { xPercent: rtl ? -6 : 6 },
-            {
-              xPercent: rtl ? 6 : -6,
-              ease: "none",
-              scrollTrigger: {
-                trigger: panel,
-                containerAnimation: scroll,
-                start: rtl ? "right left" : "left right",
-                end: rtl ? "left right" : "right left",
-                scrub: true,
-              },
-            }
-          );
-        });
 
         return () => root.classList.remove("is-horizontal");
       });

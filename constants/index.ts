@@ -3,6 +3,13 @@
 export const BRAND_NAME = "SALEM";
 export const BRAND_NAME_AR = "سَالم";
 
+// CV
+
+// Lives in /public. Its Cache-Control header (next.config.ts) makes browsers
+// re-check it, so replacing the PDF shows up without renaming it.
+export const CV_PATH = "/Salem-Mamdouh-CV.pdf";
+export const CV_DOWNLOAD_NAME = "Salem Mamdouh - Front-End Developer CV.pdf";
+
 // NAVIGATION
 
 export const NAV_LINKS = [
