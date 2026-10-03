@@ -183,19 +183,22 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
+/* Auto margins centre the track in the space above the progress bar, which
+   sits in the flow so tall panels can never run underneath it. */
 .works.is-horizontal .works-track {
   display: flex;
   flex-direction: row;
   width: max-content;
   gap: 6vw;
-  padding: 4rem 8vw 0;
+  margin-block: auto;
+  padding: 4rem 8vw 2rem;
   will-change: transform;
 }
-/* Panels keep their 16:9 shots at most half the viewport tall. */
+/* Panels keep their 16:9 shots under half the viewport tall, leaving room
+   for the details and the progress bar. */
 .works.is-horizontal .works-panel {
-  width: min(64vw, 1000px, 50svh * 16 / 9);
+  width: min(64vw, 1000px, 44svh * 16 / 9);
 }
 .works.is-horizontal .works-progress {
   display: block;
