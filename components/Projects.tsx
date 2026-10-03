@@ -137,7 +137,7 @@ const Projects = () => {
       </div>
 
       {/* Horizontal progress (desktop) */}
-      <div className="works-progress hidden absolute bottom-8 inset-x-[8vw]">
+      <div className="works-progress hidden shrink-0 mx-[8vw] mb-8">
         <div className="label flex justify-between text-muted mb-2">
           <span>{t("scrollHint")}</span>
           <span>({String(projects.length).padStart(2, "0")})</span>
