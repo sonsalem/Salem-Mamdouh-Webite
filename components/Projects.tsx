@@ -115,10 +115,6 @@ const Projects = () => {
                 <p dir="auto" className="text-sm text-muted leading-6 line-clamp-4">{project.features}</p>
                 <p dir="ltr" className="label rtl:text-right">{project.techStack.join(" / ")}</p>
                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
-                  <Link href={projectHref(String(locale), project)} className="roll text-main">
-                    <span>{t("details")} {locale === "ar" ? "←" : "→"}</span>
-                    <span>{t("details")} {locale === "ar" ? "←" : "→"}</span>
-                  </Link>
                   {project.liveDemo && (
                     <a href={project.liveDemo} target="_blank" rel="noopener noreferrer" data-cursor={t("view")} className="roll">
                       <span>{t("live")} ↗</span>

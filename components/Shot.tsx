@@ -42,7 +42,7 @@ const Shot = ({ src, alt, sizes, eager }: { src: string; alt: string; sizes: str
         style={
           {
             "--shot-shift": `-${overflow}px`,
-            "--shot-time": `${Math.max(1.2, overflow / 300)}s`,
+            "--shot-time": `${Math.max(3, overflow / 120)}s`,
           } as React.CSSProperties
         }
         className={`w-full h-auto shrink-0 ${
