@@ -88,7 +88,7 @@ const Projects = () => {
           <article
             key={project.id}
             data-panel
-            className="works-panel group min-w-0 shrink-0 flex flex-col"
+            className="works-panel group min-w-0 shrink-0 flex flex-col [container-type:inline-size]"
           >
             {/* Meta row */}
             <div className="label flex items-center justify-between gap-4 border-t border-line/20 pt-3 mb-4 text-muted">
@@ -106,7 +106,8 @@ const Projects = () => {
 
             {/* Title + details */}
             <div className="mt-5 grid md:grid-cols-12 gap-x-6 gap-y-3 items-start">
-              <h3 className="md:col-span-7 text-4xl md:text-5xl xl:text-6xl font-medium uppercase tracking-tight leading-[0.95]">
+              {/* Sized to the panel, not the viewport, so long words fit their column. */}
+              <h3 className="md:col-span-7 min-w-0 break-words text-[clamp(2rem,7cqw,3.75rem)] font-medium uppercase tracking-tight leading-[0.95]">
                 <Link href={projectHref(String(locale), project)} className="hover:text-main transition-colors duration-300">
                   {project.name}
                 </Link>

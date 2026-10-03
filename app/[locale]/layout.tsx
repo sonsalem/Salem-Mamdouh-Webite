@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 import Cursor from "@/components/Cursor";
 import IntroLoader from "@/components/IntroLoader";
-import ScrollProgress from "@/components/ScrollProgress";
+import ScrollRefresh from "@/components/ScrollRefresh";
 import QueryProvider from "@/config/QueryProvider";
 
 export const metadata: Metadata = {
@@ -57,7 +57,7 @@ export default async function RootLayout({
         <QueryProvider>
           <NextIntlClientProvider messages={messages}>
             <IntroLoader />
-            <ScrollProgress />
+            <ScrollRefresh />
             <Cursor />
             <Navbar />
             <main className="flex-1 w-full">{children}</main>
